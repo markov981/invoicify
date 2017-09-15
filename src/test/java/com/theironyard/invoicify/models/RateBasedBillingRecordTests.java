@@ -48,10 +48,10 @@ public class RateBasedBillingRecordTests {
 	}
 	
 	@Test
-	public void test_createdBy_is_null_by_default() {
+	public void test_createdBy_is_not_null_by_default() {
 		User actual = record.getCreatedBy();
 		
-		assertThat(actual).isNull();
+		assertThat(actual).isNotNull();
 	}
 	
 	@Test
@@ -65,10 +65,10 @@ public class RateBasedBillingRecordTests {
 	}
 	
 	@Test
-	public void test_lineItem_is_null_by_default() {
+	public void test_lineItem_is_not_null_by_default() {
 		InvoiceLineItem actual = record.getLineItem();
 		
-		assertThat(actual).isNull();
+		assertThat(actual).isNotNull();
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class RateBasedBillingRecordTests {
 	public void test_client_is_null_by_default() {
 		Company actual = record.getClient();
 		
-		assertThat(actual).isNull();
+		assertThat(actual).isNotNull();
 	}
 	
 	@Test

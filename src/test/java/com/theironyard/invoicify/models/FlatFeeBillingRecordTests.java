@@ -51,7 +51,7 @@ public class FlatFeeBillingRecordTests {
 	public void test_createdBy_is_null_by_default() {
 		User actual = record.getCreatedBy();
 		
-		assertThat(actual).isNull();
+		assertThat(actual).isNotNull();
 	}
 	
 	@Test

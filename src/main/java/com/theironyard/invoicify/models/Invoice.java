@@ -1,12 +1,15 @@
 package com.theironyard.invoicify.models;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Invoice {
@@ -25,6 +28,11 @@ public class Invoice {
 	
 	private String invoiceNumber;
 
+	@OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
+	private List<InvoiceLineItem> lineItem;
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +71,14 @@ public class Invoice {
 
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
+	}
+
+	public List<InvoiceLineItem> getLineItem() {
+		return lineItem;
+	}
+
+	public void setLineItem(List<InvoiceLineItem> lineItem) {
+		this.lineItem = lineItem;
 	}
 	
 }

@@ -21,6 +21,10 @@ public class InvoiceLineItem {
 	
 	private Date createdOn;
 	
+	
+	@ManyToOne
+	private Invoice invoice;
+	
 	@ManyToOne
 	private User createdBy;
 
@@ -54,5 +58,13 @@ public class InvoiceLineItem {
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 }
