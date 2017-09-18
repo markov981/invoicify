@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Welcome to the Jungle</title>
+	<meta charset="UTF-8">
+	<title>Welcome to the Jungle</title>
 </head>
 <body>
 
-{{#errorMessage}}
-  <div>{{ errorMessage }}</div>
-{{/errorMessage}}
-
-<form method="post" action="/signup">
-  <input type="text" name="username" required>
-  <br>
-  <input type="password" name="password" required>
-  <br>
-  <input type="hidden" name="{{ _csrf.parameterName }}" value="{{ _csrf.token }}">
-  <br>
-  <button>Sign up!</button>
-</form>
+	{{#errorMessage}}
+	  <div>{{ errorMessage }}</div>
+	{{/errorMessage}}
+	
+	{{> common/_navigation }}
+		
+	<form method="post" action="/signup">
+	  <input type="text" name="username" required>
+	  <br>
+	  <input type="password" name="password" required>
+	  <br>
+	  <input type="hidden" name="{{ _csrf.parameterName }}" value="{{ _csrf.token }}">
+	  <br>
+	  <button>Sign up!</button>
+	</form>
 
 </body>
 </html>

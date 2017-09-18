@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,7 @@ public class InvoiceController {
 		return mv;
 	}
 	
+	
 	@GetMapping("/new")
 	public ModelAndView selectClient() {
 		ModelAndView mv = new ModelAndView("invoices/step-1");
@@ -57,15 +59,26 @@ public class InvoiceController {
 	public ModelAndView step2(long clientId) {
 		ModelAndView mv = new ModelAndView("invoices/step-2");
 		mv.addObject("clientId", clientId);
-		mv.addObject("records", recordRepository.findByClientId(clientId)); 
+		mv.addObject("records", recordRepository.findByClientIdAndLineItemIsNull(clientId)); 
 		return mv;
 	}
 
 	@PostMapping("create")
-	public String createInvoice(Invoice invoice, long clientId, long[] recordIds, Authentication auth) {
-		
+	public ModelAndView createInvoice(Invoice invoice, long clientId, long[] recordIds, Authentication auth) {
+		ModelAndView mv = new ModelAndView();
 		User user = (User) auth.getPrincipal();
-		List<BillingRecord> records = recordRepository.findByIdIn(recordIds);
+		List<BillingRecord> records = new ArrayList<BillingRecord>();
+		
+		try {
+		records = recordRepository.findByIdIn(recordIds);
+		} catch(InvalidDataAccessApiUsageException invData) {			
+			mv.addObject("clientId", clientId);
+			mv.addObject("records", recordRepository.findByClientIdAndLineItemIsNull(clientId)); 
+			mv.addObject("errorMessage", "Please select at least one billing record.");
+			mv.setViewName("invoices/step-2");
+			return mv;   
+		}
+
 		long nowA = Calendar.getInstance().getTimeInMillis();
 		Date now  = new Date(nowA);
 		
@@ -84,15 +97,11 @@ public class InvoiceController {
 		invoice.setCompany(companyRepository.findOne(clientId));
 		invoiceRepository.save(invoice);
 		
-		return "redirect:/invoices";
+		mv.setViewName("redirect:/invoices");
+		
+		return mv;
 	}
 }
-
-
-
-
-
-
 
 
 

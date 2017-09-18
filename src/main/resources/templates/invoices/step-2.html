@@ -9,6 +9,10 @@
 
 	<h2>Choose Billing Records<h2>
 
+	{{#errorMessage}}
+	  <div>{{ errorMessage }}</div>
+	{{/errorMessage}}
+	
 	<form action="/invoices/create" method ="post">		
 		<input type="text" name="invoiceNumber" placeholder="invoice number (NaN)" required>
 		

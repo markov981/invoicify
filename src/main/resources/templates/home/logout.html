@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Logout</title>
+</head>
+<body>
+	<h1>Sign Out</h1>
+	<form method="post" action="/logout">
+		<input type="submit" value='Logout'/>
+		<input type="hidden"  name="{{ _csrf.parameterName }}"   value="{{ _csrf.token }}">
+	</form>
+	
+
+</body>
+</html>
+
+
+

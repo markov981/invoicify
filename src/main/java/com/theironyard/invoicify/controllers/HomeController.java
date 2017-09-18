@@ -35,7 +35,7 @@ public class HomeController {
 	
 	@PostMapping("signup")
 	public ModelAndView handleSignup(User user) {
-		// TODO THIS IS REALLY DUMB; NEEDS REFACTORING
+		// TODO NEEDS REFACTORING
 		String password = user.getPassword();
 		String encryptedPassword = encoder.encode(password);
 		user.setPassword(encryptedPassword);
@@ -50,6 +50,16 @@ public class HomeController {
 		}
 		return mv;
 	}
+	
+	@GetMapping("logout")
+	public String logoutG() {
+		return "home/logout";
+	}	
+	
+//	@PostMapping("logout")
+//	public String logoutP() {
+//		return "home/signup";
+//	}
 	
 }
 
